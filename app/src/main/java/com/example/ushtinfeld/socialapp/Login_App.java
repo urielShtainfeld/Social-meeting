@@ -59,7 +59,7 @@ public class Login_App extends AppCompatActivity implements LoaderCallbacks<Curs
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
-    private static final String TAG = "";
+    private static final String TAG = "SignIn";
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -267,19 +267,20 @@ public class Login_App extends AppCompatActivity implements LoaderCallbacks<Curs
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
+            //TODO: add firbase logic here
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
+
         return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+
+        return password.length() > 3;
     }
 
     /**
