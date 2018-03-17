@@ -21,7 +21,7 @@ public class MeetingCard extends AppCompatActivity {
     EditText titleTxt,descriptionTxt, locationTxt;
     Button saveMeetingBtn;
     FloatingActionMenu fabMeetCard;
-    FloatingActionButton fabAddAttend,fabAddItem;
+    FloatingActionButton fabAddAttend,fabAddItem,fabAddMyItems;
     boolean editable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class MeetingCard extends AppCompatActivity {
         fabMeetCard = (FloatingActionMenu) findViewById(R.id.fabMeetCard);
         fabAddAttend = (FloatingActionButton) findViewById(R.id.addAttend);
         fabAddItem = (FloatingActionButton) findViewById(R.id.addItem);
-
+        fabAddMyItems = (FloatingActionButton) findViewById(R.id.fabTakeItem);
         saveMeetingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +79,15 @@ public class MeetingCard extends AppCompatActivity {
                 startActivity(attendIntent);
             }
         });
-
+        fabAddMyItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent attendIntent = new Intent(getApplicationContext(),MyItemListView.class);
+                attendIntent.putExtra(MeetingListView.MEETTITLE,meeting.getTitle());
+                attendIntent.putExtra(MeetingListView.MEETID,meeting.getId());
+                startActivity(attendIntent);
+            }
+        });
     }
     private void addMeeting(){
         String title = titleTxt.getText().toString();

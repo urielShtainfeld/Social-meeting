@@ -57,6 +57,5 @@ public class MeetingListView extends AppCompatActivity {
         MeetingList adapter = new MeetingList(MeetingListView.this,meetingList);
         adapter.notifyDataSetChanged();
         meetingListView.setAdapter(adapter);
-
     }
 }

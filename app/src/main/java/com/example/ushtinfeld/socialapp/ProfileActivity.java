@@ -110,6 +110,8 @@ public class ProfileActivity extends AppCompatActivity {
 
             if (user.isEmailVerified()) {
                 textView.setText("Email Verified");
+                Intent intent = new Intent(getApplicationContext(),MeetingListView.class);
+                startActivity(intent);
             } else {
                 textView.setText("Email Not Verified (Click to Verify)");
                 textView.setOnClickListener(new View.OnClickListener() {

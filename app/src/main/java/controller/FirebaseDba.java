@@ -4,6 +4,8 @@ import android.text.format.Time;
 
 import com.example.ushtinfeld.socialapp.AttendanceList;
 import com.example.ushtinfeld.socialapp.MeetingList;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,12 +32,17 @@ public class FirebaseDba {
     private static List<Attendance> attendancesList;
     private static DatabaseReference DBItem;
     private static List<Item> itemsList;
+    private static List<Item> myItemsList;
+    private static DatabaseReference DBMyItem;
+    private static FirebaseAuth mAuth;
 
     protected FirebaseDba() {
         this.DBMeeting = FirebaseDatabase.getInstance().getReference("Meeting");
         this.meetingList = new ArrayList<>();
         this.attendancesList = new ArrayList<>();
         this.itemsList = new ArrayList<>();
+        this.myItemsList = new ArrayList<>();
+        this.mAuth = FirebaseAuth.getInstance();
 
     }
     public static FirebaseDba getInstance() {
@@ -50,6 +57,13 @@ public class FirebaseDba {
         String id = getDBMeeting().push().getKey();
         Meeting meeting = new Meeting(id,title,desc,loc,latitude,longtitude, new Date(2017,12,12), new Time());
         getDBMeeting().child(id).setValue(meeting);
+        final FirebaseUser user = mAuth.getCurrentUser();
+        if (user.getDisplayName()!= null){
+            insertAttend(meeting.getId(),user.getDisplayName(),user.getEmail());
+        }else
+        {
+            insertAttend(meeting.getId(), "He-Who-Must-Not-Be-Named",user.getEmail());
+        }
         return meeting;
     }
     public List<Meeting> GetMeetings(){
@@ -144,6 +158,19 @@ public class FirebaseDba {
         return null;
     }
 
+    public Attendance getAttendanceFromMeeting(String meetID,String mail){
+        for (Attendance attend:getAttendancesList()) {
+            if (attend.getEmail().equals(mail)) {
+                return attend;
+            }
+        }
+        for (Attendance attend:GetAttendances(meetID)) {
+            if (attend.getEmail().equals(mail)) {
+                return attend;
+            }
+        }
+        return null;
+    }
     public static List<Attendance> getAttendancesList() {
         return attendancesList;
     }
@@ -151,5 +178,30 @@ public class FirebaseDba {
     public static List<Item> getItemsList() {
         return itemsList;
     }
+
+
+    public List<Item> getMyItems(String meetID) {
+        final FirebaseUser user = mAuth.getCurrentUser();
+        Attendance attendance = getAttendanceFromMeeting(meetID,user.getEmail());
+        DBMyItem = FirebaseDatabase.getInstance().getReference("Item").child(meetID).child(attendance.getId());
+        DBMyItem.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                myItemsList.clear();
+                for (DataSnapshot meetingSnapshot:dataSnapshot.getChildren() ) {
+                    Item attendance = meetingSnapshot.getValue(Item.class);
+                    myItemsList.add(attendance);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+        return myItemsList;
+    }
+
 }
 

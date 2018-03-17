@@ -28,7 +28,8 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".AddAttendance" />
-        <activity android:name=".AddItem"></activity>
+        <activity android:name=".AddItem" />
+        <activity android:name=".MyItemListView"></activity>
     </application>
 
 </manifest>

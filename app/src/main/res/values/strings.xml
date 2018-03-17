@@ -23,4 +23,6 @@
     <string name="insert_quantity">insert quantity</string>
     <string name="add_attendance">Add attendance</string>
     <string name="save_item">Save Item</string>
+    <string name="add_selected_items">add selected items</string>
+    <string name="textview">TextView</string>
 </resources>
