@@ -23,8 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".meetingCard" />
-        <activity android:name=".Meeting_List_View" />
+        <activity android:name=".MeetingCard" />
+        <activity android:name=".MeetingListView" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".AddAttendance" />

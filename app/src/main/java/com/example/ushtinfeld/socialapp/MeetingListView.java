@@ -12,7 +12,7 @@ import java.util.List;
 import controller.FirebaseDba;
 import model.Meeting;
 
-public class Meeting_List_View extends AppCompatActivity {
+public class MeetingListView extends AppCompatActivity {
 
     ListView meetingListView;
     List<Meeting> meetingList;
@@ -40,6 +40,7 @@ public class Meeting_List_View extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         meetingList = FirebaseDba.getInstance().GetMeetings();
-        MeetingList adapter = new MeetingList(Meeting_List_View.this,meetingList);
+        MeetingList adapter = new MeetingList(MeetingListView.this,meetingList);
+        meetingListView.setAdapter(adapter);
     }
 }

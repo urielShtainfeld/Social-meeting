@@ -10,7 +10,8 @@ import android.widget.Toast;
 
 import controller.FirebaseDba;
 
-public class meetingCard extends AppCompatActivity {
+public class MeetingCard extends AppCompatActivity {
+    //todo: add date and time of meeting
 
     EditText titleTxt,descriptionTxt, locationTxt;
     Button saveMeetingBtn;

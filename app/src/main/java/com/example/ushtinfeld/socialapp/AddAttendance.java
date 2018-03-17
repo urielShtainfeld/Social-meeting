@@ -31,10 +31,11 @@ public class AddAttendance extends AppCompatActivity {
         enterEmailTxt = (EditText) findViewById(R.id.emailTxt);
         saveAttendanceBtn = (Button) findViewById(R.id.saveAttendBtn);
         attendanceList = (ListView)findViewById(R.id.listViewAttendance);
+
         Intent intent = getIntent();
 
-        id = intent.getStringExtra(Meeting_List_View.MEETID);
-        String title = intent.getStringExtra(Meeting_List_View.MEETTITLE);
+        id = intent.getStringExtra(MeetingListView.MEETID);
+        String title = intent.getStringExtra(MeetingListView.MEETTITLE);
         meetingTitleTxt.setText(title);
         saveAttendanceBtn.setOnClickListener(new View.OnClickListener() {
             @Override

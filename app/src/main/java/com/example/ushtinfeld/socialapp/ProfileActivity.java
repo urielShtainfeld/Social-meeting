@@ -157,6 +157,8 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     });
         }
+        Intent intent = new Intent(getApplicationContext(),MeetingListView.class);
+        startActivity(intent);
     }
 
     @Override

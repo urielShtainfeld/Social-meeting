@@ -4,10 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ushtinfeld.socialapp.Meeting_List_View">
+    tools:context="com.example.ushtinfeld.socialapp.MeetingListView">
 
     <ListView
         android:id="@+id/listViewMeeting"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_gravity="bottom|end"
+        style="@style/FabStyle"
+        android:src="@drawable/ic_action_new" />
 </android.support.constraint.ConstraintLayout>
