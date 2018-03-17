@@ -50,7 +50,7 @@ public class AddAttendance extends AppCompatActivity {
         String phone = enterPhoneTxt.getText().toString();
         if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) ){
             FirebaseDba.getInstance().insertAttend(this.id,name,phone);
-            Toast.makeText(this,"Attendence added",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Attendance added",Toast.LENGTH_LONG).show();
         }
         else
         {
