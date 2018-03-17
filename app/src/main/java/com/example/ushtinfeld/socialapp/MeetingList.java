@@ -30,7 +30,6 @@ public class MeetingList extends ArrayAdapter<Meeting> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-
         View listViewItem = inflater.inflate(R.layout.meeting_list,null,true);
         TextView titleTxt = (TextView) listViewItem.findViewById(R.id.titleTxtView);
         TextView descriptionTxt = (TextView) listViewItem.findViewById(R.id.descriptionTxtView);

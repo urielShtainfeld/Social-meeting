@@ -11,7 +11,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import controller.FirebaseDba;
+import model.Attendance;
 
 public class AddAttendance extends AppCompatActivity {
 
@@ -19,23 +23,27 @@ public class AddAttendance extends AppCompatActivity {
     private EditText enterNameTxt;
     private EditText enterEmailTxt;
     private Button saveAttendanceBtn;
-    private ListView attendanceList;
+    List<Attendance> attendanceList;
+    ListView attendanceListView;
+
+
     private String id;
+    private String title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_attendance);
 
-        meetingTitleTxt = (TextView) findViewById(R.id.titleTxtView);
+        meetingTitleTxt = (TextView) findViewById(R.id.meetingAttendTxt);
         enterNameTxt = (EditText) findViewById(R.id.NameTxt);
         enterEmailTxt = (EditText) findViewById(R.id.emailTxt);
         saveAttendanceBtn = (Button) findViewById(R.id.saveAttendBtn);
-        attendanceList = (ListView)findViewById(R.id.listViewAttendance);
+        attendanceListView = (ListView)findViewById(R.id.listViewAttendance);
 
         Intent intent = getIntent();
 
         id = intent.getStringExtra(MeetingListView.MEETID);
-        String title = intent.getStringExtra(MeetingListView.MEETTITLE);
+        title = intent.getStringExtra(MeetingListView.MEETTITLE);
         meetingTitleTxt.setText(title);
         saveAttendanceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +64,15 @@ public class AddAttendance extends AppCompatActivity {
         else
         {
             Toast.makeText(this,"You must enter attendance name and phone",Toast.LENGTH_LONG).show();
+        }
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        attendanceList = FirebaseDba.getInstance().GetAttendances(id);
+        AttendanceList adapter = new AttendanceList(AddAttendance.this,attendanceList);
+        if (attendanceList != null) {
+            attendanceListView.setAdapter(adapter);
         }
     }
 }

@@ -2,6 +2,8 @@ package controller;
 
 import android.text.format.Time;
 
+import com.example.ushtinfeld.socialapp.AttendanceList;
+import com.example.ushtinfeld.socialapp.MeetingList;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -13,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import model.Attendance;
+import model.Item;
 import model.Meeting;
 
 /**
@@ -21,13 +24,18 @@ import model.Meeting;
 public class FirebaseDba {
     //todo: add date and time of meeting
     private static FirebaseDba instance = null;
-    DatabaseReference DBMeeting;
-    List<Meeting> meetingList;
-    DatabaseReference DBAttend;
+    private static DatabaseReference DBMeeting;
+    private static List<Meeting> meetingList;
+    private static DatabaseReference DBAttend;
+    private static List<Attendance> attendancesList;
+    private static DatabaseReference DBItem;
+    private static List<Item> itemsList;
 
     protected FirebaseDba() {
         this.DBMeeting = FirebaseDatabase.getInstance().getReference("Meeting");
         this.meetingList = new ArrayList<>();
+        this.attendancesList = new ArrayList<>();
+        this.itemsList = new ArrayList<>();
 
     }
     public static FirebaseDba getInstance() {
@@ -37,11 +45,12 @@ public class FirebaseDba {
         return instance;
     }
 
-    public void insertMeeting(String title, String desc, String loc, double latitude, double longtitude){
+    public Meeting insertMeeting(String title, String desc, String loc, double latitude, double longtitude){
 
         String id = getDBMeeting().push().getKey();
         Meeting meeting = new Meeting(id,title,desc,loc,latitude,longtitude, new Date(2017,12,12), new Time());
         getDBMeeting().child(id).setValue(meeting);
+        return meeting;
     }
     public List<Meeting> GetMeetings(){
 
@@ -77,6 +86,70 @@ public class FirebaseDba {
 
     public List<Meeting> getMeetingList() {
         return meetingList;
+    }
+
+    public List<Attendance> GetAttendances(String meetID) {
+        DBAttend = FirebaseDatabase.getInstance().getReference("Attendance").child(meetID);
+        DBAttend.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                attendancesList.clear();
+                for (DataSnapshot meetingSnapshot:dataSnapshot.getChildren() ) {
+                    Attendance attendance = meetingSnapshot.getValue(Attendance.class);
+                    attendancesList.add(attendance);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+        return attendancesList;
+    }
+
+    public List<Item> GetItems(String meetID) {
+        DBItem = FirebaseDatabase.getInstance().getReference("Item").child(meetID);
+        DBItem.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                itemsList.clear();
+                for (DataSnapshot meetingSnapshot:dataSnapshot.getChildren() ) {
+                    Item attendance = meetingSnapshot.getValue(Item.class);
+                    itemsList.add(attendance);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+        return itemsList;
+    }
+    public void insertItem(String meetID,String name,int qty){
+        DBItem = FirebaseDatabase.getInstance().getReference("Item").child(meetID);
+        String id = DBItem.push().getKey();
+        Item attendance = new Item(id,name,qty);
+        DBItem.child(id).setValue(attendance);
+    }
+    public Meeting getMeetByID(String meetId){
+        for (Meeting meeting:getMeetingList()) {
+             if (meeting.getId().equals(meetId)){
+                 return  meeting;
+             }
+        }
+        return null;
+    }
+
+    public static List<Attendance> getAttendancesList() {
+        return attendancesList;
+    }
+
+    public static List<Item> getItemsList() {
+        return itemsList;
     }
 }
 

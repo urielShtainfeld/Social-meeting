@@ -21,4 +21,6 @@
     <string name="insert_phone">insert phone</string>
     <string name="insert_email">insert email</string>
     <string name="insert_quantity">insert quantity</string>
+    <string name="add_attendance">Add attendance</string>
+    <string name="save_item">Save Item</string>
 </resources>
