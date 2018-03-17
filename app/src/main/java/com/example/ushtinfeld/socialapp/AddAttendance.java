@@ -17,7 +17,7 @@ public class AddAttendance extends AppCompatActivity {
 
     private TextView meetingTitleTxt;
     private EditText enterNameTxt;
-    private EditText enterPhoneTxt;
+    private EditText enterEmailTxt;
     private Button saveAttendanceBtn;
     private ListView attendanceList;
     private String id;
@@ -28,7 +28,7 @@ public class AddAttendance extends AppCompatActivity {
 
         meetingTitleTxt = (TextView) findViewById(R.id.titleTxtView);
         enterNameTxt = (EditText) findViewById(R.id.NameTxt);
-        enterPhoneTxt = (EditText) findViewById(R.id.PhoneTxt);
+        enterEmailTxt = (EditText) findViewById(R.id.emailTxt);
         saveAttendanceBtn = (Button) findViewById(R.id.saveAttendBtn);
         attendanceList = (ListView)findViewById(R.id.listViewAttendance);
         Intent intent = getIntent();
@@ -47,9 +47,9 @@ public class AddAttendance extends AppCompatActivity {
 
     private void saveAttendance(){
         String name = enterNameTxt.getText().toString();
-        String phone = enterPhoneTxt.getText().toString();
-        if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) ){
-            FirebaseDba.getInstance().insertAttend(this.id,name,phone);
+        String email = enterEmailTxt.getText().toString();
+        if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) ){
+            FirebaseDba.getInstance().insertAttend(this.id,name,email);
             Toast.makeText(this,"Attendance added",Toast.LENGTH_LONG).show();
         }
         else

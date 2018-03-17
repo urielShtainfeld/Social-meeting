@@ -19,4 +19,6 @@
     <string name="save_meeting">Save meeting</string>
     <string name="insert_name">insert name</string>
     <string name="insert_phone">insert phone</string>
+    <string name="insert_email">insert email</string>
+    <string name="insert_quantity">insert quantity</string>
 </resources>

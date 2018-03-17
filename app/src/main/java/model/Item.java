@@ -4,29 +4,29 @@ package model;
  * Created by ushtinfeld on 17/03/2018.
  */
 
-public class Attendance {
+public class Item {
     private String id;
     private String name;
-    private String email;
+    private int quantity;
 
-    public Attendance() {
+    public Item() {
     }
 
-    public Attendance(String id, String name, String email) {
+    public Item(String id, String name, int quantity) {
         this.id = id;
-        this.email = email;
         this.name = name;
+        this.quantity = quantity;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 }

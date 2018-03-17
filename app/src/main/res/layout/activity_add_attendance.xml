@@ -29,14 +29,14 @@
         app:layout_constraintTop_toBottomOf="@+id/meetingAttendTxt" />
 
     <EditText
-        android:id="@+id/PhoneTxt"
+        android:id="@+id/emailTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
 
-        android:hint="@string/insert_phone"
-        android:inputType="phone"
+        android:hint="@string/insert_email"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NameTxt" />
