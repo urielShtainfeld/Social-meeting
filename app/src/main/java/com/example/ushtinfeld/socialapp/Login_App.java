@@ -3,6 +3,7 @@ package com.example.ushtinfeld.socialapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -270,7 +271,11 @@ public class Login_App extends AppCompatActivity implements LoaderCallbacks<Curs
             //TODO: add firbase logic here
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+
+            Intent meetingListView = new Intent(this, Meeting_List_View.class);
+            startActivity(meetingListView);
         }
+
     }
 
     private boolean isEmailValid(String email) {
