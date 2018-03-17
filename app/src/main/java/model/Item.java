@@ -13,12 +13,20 @@ public class Item {
     public Item() {
     }
 
-    public Item(String id, String name, int quantity) {
+    public Item(String id, String name, int quantity,int remainingQuantity) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.selected = false;
-        this.remainingQuantity = quantity;
+        this.remainingQuantity = remainingQuantity;
+    }
+
+    public int getRemainingQuantity() {
+        return remainingQuantity;
+    }
+
+    public void setRemainingQuantity(int remainingQuantity) {
+        this.remainingQuantity = remainingQuantity;
     }
 
     public String getId() {

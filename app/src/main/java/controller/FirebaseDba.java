@@ -146,7 +146,7 @@ public class FirebaseDba {
     public void insertItem(String meetID,String name,int qty){
         DBItem = FirebaseDatabase.getInstance().getReference("Item").child(meetID);
         String id = DBItem.push().getKey();
-        Item attendance = new Item(id,name,qty);
+        Item attendance = new Item(id,name,qty,qty);
         DBItem.child(id).setValue(attendance);
     }
     public Meeting getMeetByID(String meetId){
