@@ -11,11 +11,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Login_App"
+            android:name=".MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,10 @@
         </activity>
         <activity android:name=".meetingCard" />
         <activity android:name=".Meeting_List_View" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".AddAttendance"></activity>
+
     </application>
 
 </manifest>
