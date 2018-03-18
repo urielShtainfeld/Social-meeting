@@ -1,6 +1,7 @@
 package com.example.ushtinfeld.socialapp;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ public class MeetingList extends ArrayAdapter<Meeting> {
         Meeting meeting = meetingList.get(position);
         titleTxt.setText(meeting.getTitle());
         descriptionTxt.setText(meeting.getDescription());
+        listViewItem.setBackgroundResource(R.color.colorPrimary);
 
         return listViewItem;
     }

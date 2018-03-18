@@ -40,12 +40,15 @@ public class FirebaseDba {
 
 
     protected FirebaseDba() {
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         this.DBMeeting = FirebaseDatabase.getInstance().getReference("Meeting");
         this.meetingList = new ArrayList<>();
+        this.meetingList = GetMeetings();
         this.attendancesList = new ArrayList<>();
         this.itemsList = new ArrayList<>();
         this.myItemsList = new ArrayList<>();
         this.mAuth = FirebaseAuth.getInstance();
+
 
     }
     public static FirebaseDba getInstance() {
@@ -120,6 +123,9 @@ public class FirebaseDba {
             }
 
         });
+        if (attendancesList.size()>0){
+            getMyItems(meetID);
+        }
         return attendancesList;
     }
 
@@ -197,6 +203,9 @@ public class FirebaseDba {
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
+        }
+        if (myItemsList.size()>0){
+
         }
         return myItemsList;
     }

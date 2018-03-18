@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import controller.FirebaseDba;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     FirebaseAuth mAuth;
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        FirebaseDba.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);

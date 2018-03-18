@@ -36,6 +36,7 @@ dependencies {
     compile 'com.github.w9jds:FloatingActionMenu:v0.1.0-alpha'
     implementation 'com.google.firebase:firebase-messaging:11.8.0'
     compile 'com.github.florent37:singledateandtimepicker:2.0.0'
+    implementation "com.android.support:support-compat:26.1.0"
 }
 
 

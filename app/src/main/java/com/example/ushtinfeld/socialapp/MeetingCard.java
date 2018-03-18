@@ -127,8 +127,8 @@ public class MeetingCard extends AppCompatActivity {
             String loc = locationTxt.getText().toString();
             double longtitude = 5.5;
             double latitude = 5.5;
-            int noOfAttendence = 0;
-            this.meeting = FirebaseDba.getInstance().insertMeeting(title,desc,loc,latitude,longtitude,DateAndTime);
+            Date date = this.DateAndTime;
+            this.meeting = FirebaseDba.getInstance().insertMeeting(title,desc,loc,latitude,longtitude,date);
             Toast.makeText(this,"Meeting added",Toast.LENGTH_LONG).show();
             setEditable(editable,this.meeting.getId());
         }else {
@@ -149,7 +149,6 @@ public class MeetingCard extends AppCompatActivity {
     public void setEditable(boolean editable,String meetID){
         if (editable){
             fabMeetCard.setVisibility(View.INVISIBLE);
-
         }else{
             meeting = FirebaseDba.getInstance().getMeetByID(meetID);
             saveMeetingBtn.setVisibility(View.INVISIBLE);
@@ -162,6 +161,9 @@ public class MeetingCard extends AppCompatActivity {
             dateTxt.setText(meeting.getDate().toString());
             fabMeetCard.setVisibility(View.VISIBLE);
             addDateBtn.setVisibility(View.INVISIBLE);
+            FirebaseDba.getInstance().GetAttendances(meeting.getId());
+            FirebaseDba.getInstance().GetItems(meeting.getId());
+            FirebaseDba.getInstance().getMyItems(meeting.getId());
         }
     }
 }
