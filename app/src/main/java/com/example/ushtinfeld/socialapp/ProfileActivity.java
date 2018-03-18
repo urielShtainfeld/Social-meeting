@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,7 +42,7 @@ import java.io.IOException;
 public class ProfileActivity extends AppCompatActivity {
 
     private static final int CHOOSE_IMAGE = 101;
-
+    private static final int REQUEST_INVITE = 0;
     TextView textView;
     ImageView imageView;
     EditText editText;
@@ -82,6 +83,19 @@ public class ProfileActivity extends AppCompatActivity {
                 saveUserInformation();
             }
         });
+        findViewById(R.id.SendInvites).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onInviteClicked();
+            }
+        });
+    }
+    private void onInviteClicked() {
+        Intent intent = new AppInviteInvitation.IntentBuilder("Come and join me")
+                .setMessage("this is a cool app")
+                .setDeepLink(Uri.parse("https://docs.google.com/presentation/d/1FzPoiQ2IPvJvygNvn_ekKv6s20uClVy5xgEF8SDg8p4/edit?usp=sharing"))
+                .build();
+        startActivityForResult(intent, REQUEST_INVITE);
     }
 
 

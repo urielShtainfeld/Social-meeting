@@ -63,20 +63,13 @@ public class AddAttendance extends AppCompatActivity {
         if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) ){
             FirebaseDba.getInstance().insertAttend(this.id,name,email);
             Toast.makeText(this,"Attendance added",Toast.LENGTH_LONG).show();
-            // onInviteClicked(); // Todo: will add later
         }
         else
         {
             Toast.makeText(this,"You must enter attendance name and phone",Toast.LENGTH_LONG).show();
         }
     }
-    private void onInviteClicked() {
-        Intent intent = new AppInviteInvitation.IntentBuilder("Come and join me")
-                .setMessage("this is a cool app")
-                .setDeepLink(Uri.parse("https://docs.google.com/presentation/d/1FzPoiQ2IPvJvygNvn_ekKv6s20uClVy5xgEF8SDg8p4/edit?usp=sharing"))
-                .build();
-        startActivityForResult(intent, REQUEST_INVITE);
-    }
+
 
     @Override
     protected void onStart() {
