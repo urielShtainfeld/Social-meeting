@@ -5,97 +5,141 @@
     android:id="@+id/mettingCard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ushtinfeld.socialapp.MeetingCard">
+    tools:context="com.example.ushtinfeld.socialapp.MeetingCard"
+    tools:layout_editor_absoluteY="25dp">
 
     <EditText
         android:id="@+id/TitleTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/enter_title"
         android:inputType="textPersonName"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fabMeetCard" />
 
     <EditText
         android:id="@+id/descriptionTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+
         android:layout_marginTop="16dp"
         android:ems="10"
-
         android:hint="@string/insert_description"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/locationTxt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TitleTxt"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TitleTxt" />
 
     <EditText
         android:id="@+id/locationTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="123dp"
+        android:layout_marginTop="38dp"
         android:ems="10"
         android:hint="@string/location"
         android:inputType="textPersonName"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/descriptionTxt" />
+
+    <Button
+        android:id="@+id/InsertDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_date"
+        app:layout_constraintBaseline_toBaselineOf="@+id/DateAndTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/DateAndTime" />
 
     <Button
         android:id="@+id/saveMeetingBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="65dp"
         android:text="@string/save_meeting"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationTxt" />
+
+    <ListView
+        android:id="@+id/listViewItem"
+        android:layout_width="0dp"
+        android:layout_height="357dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saveMeetingBtn" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="17dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/fabMeetCard"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintStart_toEndOf="@+id/TitleTxt"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/DateAndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="21dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="201dp"
+        app:layout_constraintBottom_toTopOf="@+id/saveMeetingBtn"
+        app:layout_constraintEnd_toStartOf="@+id/InsertDate"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.w9jds.FloatingActionMenu
         android:id="@+id/fabMeetCard"
+        style="@style/FabStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/FabStyle"
-        app:base_src="@drawable/ic_action_new"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         app:base_background="@color/colorRed"
-        app:base_marginEnd="8dp"
         app:base_marginBottom="8dp"
-        app:overlay_color="#66000000"
+        app:base_marginEnd="8dp"
+        app:base_src="@drawable/ic_action_new"
         app:item_spacing="16dp"
-        app:label_marginEnd="8dp">
+        app:label_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:overlay_color="#66000000">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/addAttend"
-            app:backgroundTint="@android:color/white"
-            android:src="@drawable/attendance"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:contentDescription="Add attendance" />
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/add_attendance"
+            android:src="@drawable/attendance"
+            app:backgroundTint="@android:color/white" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/addItem"
-            app:backgroundTint="@android:color/white"
-            android:src="@drawable/item"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:contentDescription="Add item" />
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/add_item"
+            android:src="@drawable/item"
+            app:backgroundTint="@android:color/white" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabTakeItem"
-            app:backgroundTint="@android:color/white"
-            android:src="@drawable/take_item"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:contentDescription="Take Item" />
-
-
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/take_item"
+            android:src="@drawable/take_item"
+            app:backgroundTint="@android:color/white" />
     </com.w9jds.FloatingActionMenu>
 </android.support.constraint.ConstraintLayout>

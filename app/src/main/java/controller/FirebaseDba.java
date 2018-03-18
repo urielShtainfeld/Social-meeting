@@ -19,6 +19,7 @@ import java.util.List;
 import model.Attendance;
 import model.Item;
 import model.Meeting;
+import model.MyItem;
 
 /**
  * Created by ushtinfeld on 15/03/2018.
@@ -32,9 +33,11 @@ public class FirebaseDba {
     private static List<Attendance> attendancesList;
     private static DatabaseReference DBItem;
     private static List<Item> itemsList;
-    private static List<Item> myItemsList;
+    private static List<MyItem> myItemsList;
     private static DatabaseReference DBMyItem;
     private static FirebaseAuth mAuth;
+    final static String DEFAULTNAME = "He-Who-Must-Not-Be-Named";
+
 
     protected FirebaseDba() {
         this.DBMeeting = FirebaseDatabase.getInstance().getReference("Meeting");
@@ -52,17 +55,17 @@ public class FirebaseDba {
         return instance;
     }
 
-    public Meeting insertMeeting(String title, String desc, String loc, double latitude, double longtitude){
+    public Meeting insertMeeting(String title, String desc, String loc, double latitude, double longtitude,Date date){
 
         String id = getDBMeeting().push().getKey();
-        Meeting meeting = new Meeting(id,title,desc,loc,latitude,longtitude, new Date(2017,12,12), new Time());
+        Meeting meeting = new Meeting(id,title,desc,loc,latitude,longtitude, date);
         getDBMeeting().child(id).setValue(meeting);
         final FirebaseUser user = mAuth.getCurrentUser();
         if (user.getDisplayName()!= null){
             insertAttend(meeting.getId(),user.getDisplayName(),user.getEmail());
         }else
         {
-            insertAttend(meeting.getId(), "He-Who-Must-Not-Be-Named",user.getEmail());
+            insertAttend(meeting.getId(),DEFAULTNAME ,user.getEmail());
         }
         return meeting;
     }
@@ -77,16 +80,13 @@ public class FirebaseDba {
                     meetingList.add(meeting);
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
-
         return meetingList;
     }
-
     public void insertAttend(String meetID,String name,String phone){
         DBAttend = FirebaseDatabase.getInstance().getReference("Attendance").child(meetID);
         String id = DBAttend.push().getKey();
@@ -179,29 +179,39 @@ public class FirebaseDba {
         return itemsList;
     }
 
-
-    public List<Item> getMyItems(String meetID) {
+    public List<MyItem> getMyItems(String meetID) {
         final FirebaseUser user = mAuth.getCurrentUser();
         Attendance attendance = getAttendanceFromMeeting(meetID,user.getEmail());
-        DBMyItem = FirebaseDatabase.getInstance().getReference("Item").child(meetID).child(attendance.getId());
-        DBMyItem.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                myItemsList.clear();
-                for (DataSnapshot meetingSnapshot:dataSnapshot.getChildren() ) {
-                    Item attendance = meetingSnapshot.getValue(Item.class);
-                    myItemsList.add(attendance);
+        if (attendance != null) {
+            DBMyItem = FirebaseDatabase.getInstance().getReference("MyItem").child(attendance.getId());
+            DBMyItem.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    myItemsList.clear();
+                    for (DataSnapshot meetingSnapshot : dataSnapshot.getChildren()) {
+                        MyItem myItem = meetingSnapshot.getValue(MyItem.class);
+                        myItemsList.add(myItem);
+                    }
                 }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
         return myItemsList;
     }
-
+    public void saveMyItems(String meetID,Item item){
+        final FirebaseUser user = mAuth.getCurrentUser();
+        Attendance attendance = getAttendanceFromMeeting(meetID,user.getEmail());
+        if (attendance != null) {
+            DBMyItem = FirebaseDatabase.getInstance().getReference("MyItem").child(attendance.getId());
+            String id = DBMyItem.push().getKey();
+            MyItem myItem = new MyItem(id, item.getName(), item.getSelectedQty());
+            DBMyItem.child(id).setValue(myItem);
+        }
+    }
+    public void saveItemChanges(String meetId,Item item){
+        FirebaseDatabase.getInstance().getReference("Item").child(meetId).child(item.getId()).setValue(item);
+    }
 }
 

@@ -21,7 +21,7 @@ public class Meeting
     public Meeting(){
 
     }
-    public Meeting(String id, String title, String description, String locationName, double latitude, double longitude, Date date, android.text.format.Time time) {
+    public Meeting(String id, String title, String description, String locationName, double latitude, double longitude, Date date) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -29,7 +29,6 @@ public class Meeting
         this.locationName = locationName;
         this.latitude = latitude;
         this.date = date;
-        this.time = time;
     }
 
     public String getId() {
@@ -89,10 +88,6 @@ public class Meeting
 
     public Date getDate() {
         return date;
-    }
-
-    public android.text.format.Time getTime() {
-        return time;
     }
 
     @Override

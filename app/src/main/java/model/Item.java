@@ -10,6 +10,7 @@ public class Item {
     private int quantity;
     private boolean selected;
     private int remainingQuantity;
+    private int selectedQty;
     public Item() {
     }
 
@@ -27,6 +28,14 @@ public class Item {
 
     public void setRemainingQuantity(int remainingQuantity) {
         this.remainingQuantity = remainingQuantity;
+    }
+
+    public int getSelectedQty() {
+        return selectedQty;
+    }
+
+    public void setSelectedQty(int selectedQty) {
+        this.selectedQty = selectedQty;
     }
 
     public String getId() {
