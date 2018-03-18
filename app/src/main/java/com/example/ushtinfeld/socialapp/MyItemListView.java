@@ -161,7 +161,7 @@ public class MyItemListView extends AppCompatActivity {
                  item.setRemainingQuantity(item.getRemainingQuantity()-item.getSelectedQty());
                  item.setSelected(false);
                  FirebaseDba.getInstance().saveItemChanges(id,item);
-                 Toast.makeText(this,"Meeting added",Toast.LENGTH_LONG).show();
+                 Toast.makeText(this,"Items taked",Toast.LENGTH_LONG).show();
              }
          }
      }
