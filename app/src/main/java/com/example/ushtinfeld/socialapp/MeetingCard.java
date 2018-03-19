@@ -6,6 +6,8 @@ import android.content.Intent;
 import com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker;
 import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog;
 import com.github.florent37.singledateandtimepicker.widget.SingleDateAndTimeConstants;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.Geofence;
 import com.w9jds.FloatingActionMenu;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -26,11 +28,10 @@ import model.Meeting;
 import model.MyItem;
 
 public class MeetingCard extends AppCompatActivity {
-    //todo: add date and time of meeting
     //todo: add for add attend And item
     Meeting meeting;
     EditText titleTxt,descriptionTxt, locationTxt;
-    Button saveMeetingBtn,addDateBtn;
+    Button saveMeetingBtn,addDateBtn,addLocationBtn;
     FloatingActionMenu fabMeetCard;
     FloatingActionButton fabAddAttend,fabAddItem,fabAddMyItems;
     boolean editable;
@@ -39,6 +40,8 @@ public class MeetingCard extends AppCompatActivity {
     Date DateAndTime;
     TextView dateTxt;
     final Context context = this;
+    private GoogleApiClient mClient;
+    private Geofence mGeofencing;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,7 @@ public class MeetingCard extends AppCompatActivity {
         fabAddItem = (FloatingActionButton) findViewById(R.id.addItem);
         fabAddMyItems = (FloatingActionButton) findViewById(R.id.fabTakeItem);
         dateTxt = (TextView) findViewById(R.id.DateAndTime);
+        addLocationBtn = (Button) findViewById(R.id.AddLocation);
         addDateBtn = (Button) findViewById(R.id.InsertDate);
         addDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,8 +89,6 @@ public class MeetingCard extends AppCompatActivity {
                 fabMeetCard.setVisibility(View.VISIBLE);
             }
         });
-
-
 
         fabAddItem.setOnClickListener(new View.OnClickListener() {
             @Override

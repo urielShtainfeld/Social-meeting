@@ -2,7 +2,9 @@ package model;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by ushtinfeld on 15/03/2018.
@@ -17,7 +19,9 @@ public class Meeting
     private double latitude;
     private String id;
     private Date date ;
-    private android.text.format.Time time;
+    private List<Item> items;
+    private List<Attendance> attendances;
+    private List<MyItem> myItems;
     public Meeting(){
 
     }
@@ -29,6 +33,9 @@ public class Meeting
         this.locationName = locationName;
         this.latitude = latitude;
         this.date = date;
+        this.items = new ArrayList<>();
+        this.myItems = new ArrayList<>();
+        this.attendances = new ArrayList<>();
     }
 
     public String getId() {
@@ -44,7 +51,6 @@ public class Meeting
     {
         this.title = title;
     }
-
 
     public String getDescription ()
     {
@@ -88,6 +94,30 @@ public class Meeting
 
     public Date getDate() {
         return date;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public List<Attendance> getAttendances() {
+        return attendances;
+    }
+
+    public List<MyItem> getMyItems() {
+        return myItems;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public void setAttendances(List<Attendance> attendances) {
+        this.attendances = attendances;
+    }
+
+    public void setMyItems(List<MyItem> myItems) {
+        this.myItems = myItems;
     }
 
     @Override

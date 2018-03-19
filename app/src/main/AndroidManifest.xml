@@ -31,6 +31,9 @@
         <activity android:name=".AddAttendance" />
         <activity android:name=".AddItem" />
         <activity android:name=".MyItemListView"></activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDPDT1GR-cfBYfV1Gr0jRPLkAsSsS5Mi8A"/>
     </application>
 
 </manifest>
