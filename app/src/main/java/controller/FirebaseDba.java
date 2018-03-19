@@ -27,7 +27,6 @@ import model.SearchItem;
  * Created by ushtinfeld on 15/03/2018.
  */
 public class FirebaseDba {
-    //todo: add date and time of meeting
     private static FirebaseDba instance = null;
     private static DatabaseReference DBMeeting;
     private static List<Meeting> meetingList;

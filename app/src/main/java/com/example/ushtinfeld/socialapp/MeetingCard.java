@@ -40,7 +40,6 @@ import model.Meeting;
 import model.MyItem;
 
 public class MeetingCard extends AppCompatActivity {
-    //todo: add for add attend And item
     private static final int PLACE_PICKER_REQUEST = 1;
     private static final int PERMISSIONS_REQUEST_FINE_LOCATION = 111;
     Meeting meeting;
