@@ -13,12 +13,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.appinvite.FirebaseAppInvite;
 import com.google.android.gms.appinvite.AppInviteInvitation;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import controller.FirebaseDba;
 import model.Attendance;
+import model.Meeting;
 
 public class AddAttendance extends AppCompatActivity {
 
@@ -29,9 +31,10 @@ public class AddAttendance extends AppCompatActivity {
     List<Attendance> attendanceList;
     ListView attendanceListView;
     private static final int REQUEST_INVITE = 0;
-
+    private Meeting meeting;
     private String id;
     private String title;
+    AttendanceList adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,7 @@ public class AddAttendance extends AppCompatActivity {
         Intent intent = getIntent();
 
         id = intent.getStringExtra(MeetingListView.MEETID);
+        this.meeting =FirebaseDba.getInstance().getMeetByID(id);
         title = intent.getStringExtra(MeetingListView.MEETTITLE);
         meetingTitleTxt.setText(title);
         saveAttendanceBtn.setOnClickListener(new View.OnClickListener() {
@@ -61,8 +65,10 @@ public class AddAttendance extends AppCompatActivity {
         String name = enterNameTxt.getText().toString();
         String email = enterEmailTxt.getText().toString();
         if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) ){
-            FirebaseDba.getInstance().insertAttend(this.id,name,email);
+            meeting.getAttendances().add(new Attendance(name,email));
+            this.adapter.notifyDataSetChanged();
             Toast.makeText(this,"Attendance added",Toast.LENGTH_LONG).show();
+            FirebaseDba.getInstance().updateMeeting(meeting);
         }
         else
         {
@@ -74,8 +80,8 @@ public class AddAttendance extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        attendanceList = FirebaseDba.getInstance().GetAttendances(id);
-        AttendanceList adapter = new AttendanceList(AddAttendance.this,attendanceList);
+        attendanceList = this.meeting.getAttendances();
+        adapter = new AttendanceList(AddAttendance.this,attendanceList);
         if (attendanceList != null) {
             attendanceListView.setAdapter(adapter);
         }

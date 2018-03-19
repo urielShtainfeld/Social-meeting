@@ -24,8 +24,17 @@ import java.util.List;
 
 import controller.FirebaseDba;
 import model.Item;
+import model.Meeting;
+import model.MyItem;
 
 public class MyItemListView extends AppCompatActivity {
+
+    private Meeting meeting;
+    Button btnSaveMyItems;
+    List<Item> items;
+    ListView listView;
+    ItemsListAdapter myItemsListAdapter;
+    String id;
 
     static class ViewHolder {
         CheckBox checkBox;
@@ -117,11 +126,6 @@ public class MyItemListView extends AppCompatActivity {
         }
     }
 
-    Button btnSaveMyItems;
-    List<Item> items;
-    ListView listView;
-    ItemsListAdapter myItemsListAdapter;
-    String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,13 +134,18 @@ public class MyItemListView extends AppCompatActivity {
         btnSaveMyItems = (Button) findViewById(R.id.AddItemsToMe);
         Intent intent = getIntent();
         id = intent.getStringExtra(MeetingListView.MEETID);
-        items = FirebaseDba.getInstance().GetItems(id);
-        if(items != null) {
-            myItemsListAdapter = new ItemsListAdapter(this, items);
-        }else {
-            items = new ArrayList<>();
-            myItemsListAdapter = new ItemsListAdapter(this, items);
+        this.meeting =FirebaseDba.getInstance().getMeetByID(id);
+        items = this.meeting.getItems();
+        if (meeting.getMyItems() != null) {
+            items = this.meeting.getItems();
         }
+        else
+        {
+            meeting.setMyItems(new ArrayList<MyItem>());
+            items = this.meeting.getItems();
+        }
+        myItemsListAdapter = new ItemsListAdapter(this, items);
+
         listView.setAdapter(myItemsListAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -155,13 +164,18 @@ public class MyItemListView extends AppCompatActivity {
         });
     }
      public void addMyItems(){
+         boolean changed = false;
          for (Item item:items) {
              if (item.isSelected()){
-                 FirebaseDba.getInstance().saveMyItems(id,item);
+                 this.meeting.getMyItems().add(new MyItem(item.getName(),item.getSelectedQty()));
                  item.setRemainingQuantity(item.getRemainingQuantity()-item.getSelectedQty());
                  item.setSelected(false);
-                 FirebaseDba.getInstance().saveItemChanges(id,item);
-                 Toast.makeText(this,"Items taked",Toast.LENGTH_LONG).show();
+                 changed = true;
+             }
+             if (changed) {
+                 myItemsListAdapter.notifyDataSetChanged();
+                 Toast.makeText(this, "Items taked", Toast.LENGTH_LONG).show();
+                 FirebaseDba.getInstance().updateMeeting(meeting);
              }
          }
      }

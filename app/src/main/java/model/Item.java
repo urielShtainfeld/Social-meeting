@@ -1,11 +1,14 @@
 package model;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Created by ushtinfeld on 17/03/2018.
  */
 
 public class Item {
-    private String id;
+    private final AtomicInteger unique = new AtomicInteger();
+    private int id;
     private String name;
     private int quantity;
     private boolean selected;
@@ -14,8 +17,8 @@ public class Item {
     public Item() {
     }
 
-    public Item(String id, String name, int quantity,int remainingQuantity) {
-        this.id = id;
+    public Item(String name, int quantity,int remainingQuantity) {
+        this.id = unique.incrementAndGet();
         this.name = name;
         this.quantity = quantity;
         this.selected = false;
@@ -38,7 +41,7 @@ public class Item {
         this.selectedQty = selectedQty;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

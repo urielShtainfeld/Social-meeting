@@ -1,25 +1,27 @@
 package model;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Created by ushtinfeld on 18/03/2018.
  */
 
 public class MyItem {
-    private String id;
+    private final AtomicInteger unique = new AtomicInteger();
+    private int id;
     private String name;
     private int quantity;
 
     public MyItem() {
-
     }
 
-    public MyItem(String id, String name, int quantity) {
-        this.id = id;
+    public MyItem(String name, int quantity) {
+        this.id = unique.incrementAndGet();
         this.name = name;
         this.quantity = quantity;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

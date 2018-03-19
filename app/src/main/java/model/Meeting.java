@@ -112,10 +112,6 @@ public class Meeting
         this.items = items;
     }
 
-    public void setAttendances(List<Attendance> attendances) {
-        this.attendances = attendances;
-    }
-
     public void setMyItems(List<MyItem> myItems) {
         this.myItems = myItems;
     }

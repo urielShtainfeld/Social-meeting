@@ -1,24 +1,27 @@
 package model;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Created by ushtinfeld on 17/03/2018.
  */
 
 public class Attendance {
-    private String id;
+    private final AtomicInteger unique = new AtomicInteger();
+    private int id;
     private String name;
     private String email;
 
     public Attendance() {
     }
 
-    public Attendance(String id, String name, String email) {
-        this.id = id;
+    public Attendance(String name, String email) {
+        this.id = unique.incrementAndGet();
         this.email = email;
         this.name = name;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

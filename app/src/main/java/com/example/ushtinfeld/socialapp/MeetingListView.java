@@ -1,7 +1,9 @@
 package com.example.ushtinfeld.socialapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +22,7 @@ public class MeetingListView extends AppCompatActivity {
     ListView meetingListView;
     List<Meeting> meetingList;
     FloatingActionButton newMeeting;
+    MeetingList adapter;
     final static String MEETTITLE = "MeetingTitle";
     final static String MEETID = "MeetingID";
     final static String EDITABLE = "Editable";
@@ -38,6 +41,13 @@ public class MeetingListView extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        meetingListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                deleteMeeting(position);
+                return true;
+            }
+        });
         newMeeting = (FloatingActionButton) findViewById(R.id.fab);
         newMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,12 +59,35 @@ public class MeetingListView extends AppCompatActivity {
             }
         });
     }
+    private void deleteMeeting(int position){
+        final int deletePosition =position;
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        FirebaseDba.getInstance().deleteMeeting(meetingList.get(deletePosition));
+                        meetingList.remove(deletePosition);
+                        adapter.notifyDataSetChanged();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to delete this meeeting?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
-        meetingList = FirebaseDba.getInstance().GetMeetings();
-        MeetingList adapter = new MeetingList(MeetingListView.this,meetingList);
+        meetingList = FirebaseDba.getInstance().getMeetings();
+        adapter = new MeetingList(MeetingListView.this,meetingList);
         adapter.notifyDataSetChanged();
         meetingListView.setAdapter(adapter);
     }

@@ -19,12 +19,12 @@ import model.MyItem;
 
 public class MyItemList extends ArrayAdapter<MyItem> {
     private Activity context;
-    private List<MyItem> attendanceList;
+    private List<MyItem> myItems;
 
     public MyItemList(Activity context, List<MyItem> attendanceList) {
         super(context, R.layout.my_item_list, attendanceList);
         this.context = context;
-        this.attendanceList = attendanceList;
+        this.myItems = attendanceList;
     }
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -32,7 +32,7 @@ public class MyItemList extends ArrayAdapter<MyItem> {
         View listViewItem = inflater.inflate(R.layout.my_item_list,null,true);
         TextView titleTxt = (TextView) listViewItem.findViewById(R.id.myItemNameTxtView);
         TextView descriptionTxt = (TextView) listViewItem.findViewById(R.id.myQuantityTxtView);
-        MyItem myItem = attendanceList.get(position);
+        MyItem myItem = myItems.get(position);
         if (myItem.getName() != null) {
             titleTxt.setText(myItem.getName());
             descriptionTxt.setText(Integer.toString(myItem.getQuantity()));

@@ -11,10 +11,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import controller.FirebaseDba;
 import model.Item;
+import model.Meeting;
 
 public class AddItem extends AppCompatActivity {
 
@@ -22,10 +24,10 @@ public class AddItem extends AppCompatActivity {
     private EditText enterNameTxt;
     private EditText enterEmailTxt;
     private Button saveAttendanceBtn;
-    List<Item> attendanceList;
-    ListView attendanceListView;
-
-
+    List<Item> itemList;
+    ListView itemListView;
+    private Meeting meeting;
+    ItemsList adapter;
     private String id;
     private String title;
     @Override
@@ -37,11 +39,12 @@ public class AddItem extends AppCompatActivity {
         enterNameTxt = (EditText) findViewById(R.id.ItemNameTxt);
         enterEmailTxt = (EditText) findViewById(R.id.ItemQtyTxt);
         saveAttendanceBtn = (Button) findViewById(R.id.saveItemBtn);
-        attendanceListView = (ListView)findViewById(R.id.listViewItem);
+        itemListView = (ListView)findViewById(R.id.listViewItem);
 
         Intent intent = getIntent();
 
         id = intent.getStringExtra(MeetingListView.MEETID);
+        this.meeting =FirebaseDba.getInstance().getMeetByID(id);
         title = intent.getStringExtra(MeetingListView.MEETTITLE);
         meetingTitleTxt.setText(title);
         saveAttendanceBtn.setOnClickListener(new View.OnClickListener() {
@@ -55,10 +58,14 @@ public class AddItem extends AppCompatActivity {
 
     private void saveAttendance(){
         String name = enterNameTxt.getText().toString();
-        String email = enterEmailTxt.getText().toString();
-        if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) ){
-            FirebaseDba.getInstance().insertItem(this.id,name,Integer.parseInt(email));
+        String qty = enterEmailTxt.getText().toString();
+        if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(qty) ){
+            meeting.getItems().add(new Item(name,Integer.parseInt(qty),Integer.parseInt(qty)));
+            //FirebaseDba.getInstance().insertItem(this.id,name,Integer.parseInt(qty));
+
+            adapter.notifyDataSetChanged();
             Toast.makeText(this,"Item added",Toast.LENGTH_LONG).show();
+            FirebaseDba.getInstance().updateMeeting(meeting);
         }
         else
         {
@@ -68,8 +75,14 @@ public class AddItem extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        attendanceList = FirebaseDba.getInstance().GetItems(id);
-        ItemsList adapter = new ItemsList(AddItem.this,attendanceList);
-        attendanceListView.setAdapter(adapter);
+        if (this.meeting.getItems() != null) {
+            itemList = this.meeting.getItems();
+        }else {
+            this.meeting.setItems(new ArrayList<Item>());
+            itemList = this.meeting.getItems();
+        }
+
+        adapter = new ItemsList(AddItem.this,itemList);
+        itemListView.setAdapter(adapter);
     }
 }
