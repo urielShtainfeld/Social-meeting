@@ -55,12 +55,12 @@
         android:id="@+id/AddLocation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
         android:layout_marginTop="128dp"
         android:layout_weight="0.5"
         android:text="@string/add_location"
-        app:layout_constraintLeft_toRightOf="@+id/locationTxt"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintRight_toLeftOf="@id/locationTxt"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="288dp" />
 
     <Button
         android:id="@+id/InsertDate"
@@ -173,7 +173,7 @@
         android:layout_weight="0.5"
         android:text="@string/my_items"
         android:textAlignment="center"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/listViewItem"
         app:layout_constraintEnd_toEndOf="parent"
